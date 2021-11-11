@@ -29,18 +29,33 @@ class RegisterController
                 'email' => 'required|email',
                 'name' => 'required|min:6',
                 'password' => 'required|min:6|max:32',
-                'confirm_password' => 'required|min:6|max:32|match:password'
-            ]);
+                'confirm_password' => 'required|min:6|match:password'
+            ], [
+                'email.required' => 'Vui lòng điền thông tin',
+                'email.email' => 'Email không đúng định dạng',
+                'name.required' => 'Vui lòng điền thông tin',
+                'name.min' => 'Vui lòng điền tối tiểu 6 ký tự',
+                'password.required' => 'Vui lòng điền thông tin',
+                'password.min' => 'Vui lòng điền tối tiểu 6 ký tự',
+                'password.max' => 'Tối đa chỉ đạt 32 ký tự',
+                'confirm_password.required' => 'Vui lòng điền thông tin',
+                'confirm_password.min' => 'Vui lòng điền tối tiểu 6 ký tự',
+                'confirm_password.match' => 'Mật khẩu xác nhận không chính xác'
+            ]); 
+
+            $ck_email = $this->users->findEmail($input['email']);
+            if ($ck_email) {
+                $validate['email'][] = 'Địa chỉ email đã tồn tại';
+            }
 
             if (empty($validate)) {
                 $name_arr = $this->users->nameSeparation($input['name']);
                 $first_name = $name_arr['first_name'];
                 $last_name = $name_arr['last_name'];
-                $username = $this->users->emailSeparation($input['email']);
                 $password = password_hash($input['password'], PASSWORD_DEFAULT);
 
                 $user_id = DB::table('users')->insert([
-                    'username' => $username, 'email' => $input['email'], 'name' => $input['name'], 'first_name' => $first_name,
+                    'email' => $input['email'], 'name' => $input['name'], 'first_name' => $first_name,
                     'last_name' => $last_name, 'password' => $password
                 ])->save();
 

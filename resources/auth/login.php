@@ -22,9 +22,9 @@
         @endif
 
         <p>
-            <label for="username">Username</label>
-            <input type="text" name="username" id="username" value="{{ old('username') }}"/>
-            <span class="errors">{{ $errors['username'][0] ?? '' }}</span>
+            <label for="email">Username</label>
+            <input type="text" name="email" id="email" value="{{ old('email') }}"/>
+            <span class="errors">{{ $errors['email'][0] ?? '' }}</span>
         </p>
         <p>
             <label for="password">Password</label>

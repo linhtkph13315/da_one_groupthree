@@ -17,20 +17,6 @@ class Users
         ];
     }
 
-    public function emailSeparation($email) : string
-    {
-        $indexEmail = strpos($email, "@");
-        return substr($email, 0, $indexEmail);
-    }
-
-    public function loginWithEmailOrUsername($emailOrUsername)
-    {
-        return DB::table('users')->select('*')
-            ->where('username', '=', $emailOrUsername)
-            ->orWhere('email', '=', $emailOrUsername)
-            ->execute()->first();
-    }
-
     public function findUserByID($user_id)
     {
         return DB::table('users')->select('*')

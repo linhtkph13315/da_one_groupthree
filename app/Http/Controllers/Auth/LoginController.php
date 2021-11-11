@@ -23,13 +23,19 @@ class LoginController
             $input = $request->body();
 
             $validate = $request->validate([
-                'username' => 'required',
+                'email' => 'required|email',
                 'password' => 'required|min:6|max:32',
+            ], [
+                'email.required' => 'Vui lòng điền thông tin',
+                'email.email' => 'Email không đúng định dạng',
+                'password.required' => 'Vui lòng điền thông tin',
+                'password.min' => 'Vui lòng điền tối tiểu 6 ký tự',
+                'password.max' => 'Tối đa chỉ đạt 32 ký tự'
             ]);
 
             if (empty($validate))
             {
-                $result = $this->users->loginWithEmailOrUsername($input['username']);
+                $result = $this->users->findEmail($input['email']);
                 if (empty($result))
                 {
                     $message = 'Tài khoản không tồn tại';
@@ -42,7 +48,7 @@ class LoginController
                 {
                     $message = 'Tài khoản đã bị khoá';
                 }
-                else if ($result['username'] == $input['username'] || $result['email'] == $input['username'])
+                else if ($result['email'] == $input['email'])
                 {
                     $verify_password = password_verify($input['password'], $result['password']);
                     if ($result['password'] == $verify_password)

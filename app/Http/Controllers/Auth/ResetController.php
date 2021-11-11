@@ -27,6 +27,9 @@ class ResetController
 
             $validate = $request->validate([
                 'email' => 'required|email',
+            ], [
+                'email.required' => 'Vui lòng điền thông tin',
+                'email.email' => 'Email không đúng định dạng',
             ]);
 
             $user = $this->users->findEmail($email);
