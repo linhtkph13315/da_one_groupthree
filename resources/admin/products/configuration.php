@@ -1,6 +1,6 @@
 <?php layout('layouts.admin.master') ?>
 
-<?php section('title', 'Update {{ $product["title"] }}') ?>
+<?php section('title', 'Update cau hinh may') ?>
 
 <?php section('content') ?>
     <a href="{{ url('admin/product') }}">Danh sach san pham</a>
@@ -8,7 +8,10 @@
         <p>
             <label for="image">Image</label>
             <input type="file" name="image" id="image" accept="image/*"/>
-            <span class="errors">{{ $errors['image'][0] ?? '' }}</span>
+        </p>
+        <p>
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title"/>
         </p>
         <p>
             <label for="title">Title</label>

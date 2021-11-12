@@ -2,9 +2,7 @@
 
 namespace app\Http\Controllers\Admin;
 
-use app\Http\Controller;
-
-class DashboardController extends Controller
+class DashboardController
 {
     public function __construct()
     {

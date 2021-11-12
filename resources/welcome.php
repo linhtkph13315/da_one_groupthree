@@ -9,7 +9,7 @@
     <ul>
     @foreach($products as $item)
         <li>
-            <a href="{{ url($item['cate_slug'].'/'.$item['brand_slug'].'-'.$item['slug']) }}">{{ $item['title'] }}</a>
+            <a href="{{ url($item['cate_parent_slug'].'/'.$item['cate_child_slug'].'-'.$item['product_slug']) }}">{{ $item['product_full_name'] }}</a>
         </li>
     @endforeach
     </ul>

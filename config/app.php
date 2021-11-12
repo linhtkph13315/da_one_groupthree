@@ -102,3 +102,13 @@ function upload_image($file = [], $folder = '') {
     global $app;
     return $app->helper::uploadImage($file, $folder);
 }
+
+function requestInput($name) {
+    global $app;
+    return $app->request->input($name);
+}
+
+function getMenuClient() {
+    global $app;
+    return $app->option->getMenuClient();
+}

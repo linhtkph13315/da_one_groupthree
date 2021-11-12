@@ -14,8 +14,9 @@
 <h1>Header</h1>
 <ul>
     <li><a href="<?= route() ?>">Trang chu</a></li>
-    <li><a href="<?= route('danh-muc-dien-thoai') ?>">Dien thoai</a></li>
-    <li><a href="<?= route('danh-muc-tablet') ?>">Tablet</a></li>
+    @foreach(getMenuClient() as $item)
+    <li><a href="{{ route('danh-muc-'.$item['category_slug']) }}">{{ $item['category_name'] }}</a></li>
+    @endforeach
     <li>
         @auth 
             Hello, {{ auth['first_name'] }} <a href="<?= route('account.logout') ?>">Logout</a>

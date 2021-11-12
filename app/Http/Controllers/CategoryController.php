@@ -15,11 +15,13 @@ class CategoryController
 
     public function index($slug)
     {
-        $category = $this->categories->getCategoryBySlug($slug);
-        if (empty($category)) {
+        $products = $this->categories->getCategoryBySlug($slug);
+        if (empty($products)) {
             error_page();
         }
-        
-        view('category', ['title' => $category['cate_name']]);
+        view('category', [
+            'cate_title' => $this->categories->getCategoryTitle($slug),
+            'products' => $products
+        ]);
     }
 }

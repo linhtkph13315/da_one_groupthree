@@ -17,7 +17,6 @@ class HomeController extends Controller
     public function index()
     {
         $data = $this->products->listProduct();
-
         view('welcome', [
             'products' => $data
         ]);

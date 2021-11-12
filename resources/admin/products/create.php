@@ -4,6 +4,7 @@
 
 <?php section('content') ?>
     <h1>Create</h1>
+    <a href="{{ url('admin/product') }}">Danh sach san pham</a>
     <form action="" method="post" enctype="multipart/form-data">
         <p>
             <label for="image">Image</label>
@@ -12,8 +13,55 @@
         </p>
         <p>
             <label for="title">Title</label>
-            <input type="text" name="title" id="title" value="{{ old('title') }}"/>
-            <span class="errors">{{ $errors['title'][0] ?? '' }}</span>
+            <input type="text" name="title" id="title"/>
+        </p>
+        <p>
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title"/>
+        </p>
+        <p>
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title"/>
+        </p>
+        <p>
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title"/>
+        </p>
+        <p>
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title"/>
+        </p>
+        <p>
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title"/>
+        </p>
+        <p>
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title"/>
+        </p>
+        <p>
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title"/>
+        </p>
+        <p>
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title"/>
+        </p>
+        <p>
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title"/>
+        </p>
+        <p>
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title"/>
+        </p>
+        <p>
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title"/>
+        </p>
+        <p>
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title"/>
         </p>
         <p>
             <button type="submit">Create</button>

@@ -18,5 +18,5 @@ define('MAIL_HOST', 'smtp.gmail.com');
 define('MAIL_SMTP_AUTH', true);
 define('MAIL_SMTP_SECURE', 'tls');
 define('MAIL_PORT', '587');
-define('MAIL_USERNAME', 'example@gmail.com');
-define('MAIL_PASSWORD', 'example');
+define('MAIL_USERNAME', 'chuongkvph13392@fpt.edu.vn');
+define('MAIL_PASSWORD', 'Chuong9x');

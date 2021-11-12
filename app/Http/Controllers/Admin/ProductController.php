@@ -85,4 +85,31 @@ class ProductController
         session_set('message', 'Xoá thành công');
         redirect('admin.product');
     }
+
+
+    public function configuration($id)
+    {
+        view('admin.products.configuration');
+    }
+
+    public function variant()
+    {
+        view('admin.products.variants.list');
+    }
+
+    public function variantCreate()
+    {
+        view('admin.products.variants.create');
+    }
+
+    public function variantUpdate(Request $request)
+    {
+        view('admin.products.variants.update');
+    }
+
+    public function variantDelete(Request $request)
+    {
+        session_set('message', 'Xoá thành công');
+        redirect('admin.product.variant?pid='.$request->input('pid'));
+    }
 }

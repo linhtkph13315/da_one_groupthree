@@ -2,50 +2,56 @@
 
 namespace app;
 
+use database\DB;
+
 class Products
 {
-    public function listProduct() : array
+    public function listProduct()
     {
-        return [
-            [
-                'product_id' => 1,
-                'title' => 'San pham 1',
-                'slug' => 'san-pham-1',
-                'brand_slug' => 'oppo',
-                'cate_slug' => 'dien-thoai',
-                'cate_name' => 'Dien thoai'
-            ],
-            [
-                'product_id' => 2,
-                'title' => 'San pham 2',
-                'slug' => 'san-pham-2',
-                'brand_slug' => 'samsung',
-                'cate_slug' => 'tablet',
-                'cate_name' => 'Tablet'
-            ],
-            [
-                'product_id' => 3,
-                'title' => 'San pham 3',
-                'slug' => 'san-pham-3',
-                'brand_slug' => 'iphone',
-                'cate_slug' => 'dien-thoai',
-                'cate_name' => 'Dien thoai'
-            ]
-        ];
+        return DB::table('products P')->select("concat(C.category_name, ' ', P.product_name) as product_full_name",
+            'P.*', 'B.brand_name',' B.brand_slug', 'C.category_name as cate_child_name', 
+            'C.category_slug as cate_child_slug', 'CParent.category_name as cate_parent_name', 'CParent.category_slug as cate_parent_slug')
+        ->leftJoin('brands B', 'B.brand_id', '=', 'P.brand_id')
+        ->leftJoin('categories C','C.category_id', '=', 'P.category_id')
+        ->leftJoin('categories CParent','C.parent_id', '=', 'CParent.category_id')->execute()->get();
     }
 
-    public function getProductDetails($cate, $brand, $slug) : array
+    public function getProductDetailsVariant($cate_parent, $cate_child, $product_slug)
     {
-        $data = $this->listProduct();
+        $product = [];
+        $data = DB::table('products P')->select("concat(C.category_name, ' ', P.product_name) as product_full_name",
+            "concat(C.category_slug, '-', P.product_slug) as product_full_slug",
+            'P.*', 'PV.*', 'B.brand_name',' B.brand_slug', 'C.category_name as cate_child_name', 
+            'C.category_slug as cate_child_slug', 'CParent.category_name as cate_parent_name', 'CParent.category_slug as cate_parent_slug')
+        ->leftJoin('product_variants PV', 'PV.product_id', '=', 'P.product_id')
+        ->leftJoin('brands B', 'B.brand_id', '=', 'P.brand_id')
+        ->leftJoin('categories C','C.category_id', '=', 'P.category_id')
+        ->leftJoin('categories CParent','C.parent_id', '=', 'CParent.category_id')
+        ->where('CParent.category_slug', '=', $cate_parent)
+        ->where( "concat(C.category_slug, '-', P.product_slug)", '=', ($cate_child .'-'. $product_slug))
+        ->execute();
 
-        $result = [];
-        foreach ($data as $value) {
-            if ($value['cate_slug'] == $cate && $value['brand_slug'] == $brand && $value['slug'] == $slug) {
-                $result = $value;
-            }
+        if (count($data->get()) > 1) {
+            $product = $data->get();
+        } else {
+            $product[] = $data->first();
         }
 
-        return $result;
+        return $product;
+    }
+
+    public function getProductDetails($cate_parent, $cate_child, $product_slug)
+    {
+        return DB::table('products P')->select('P.*', "concat(C.category_name, ' ', P.product_name) as product_full_name", 
+            "concat(C.category_slug, '-', P.product_slug) as product_full_slug", 
+            'C.category_name as cate_child_name', 'C.category_slug as cate_child_slug',
+            'CParent.category_name as cate_parent_name', 'CParent.category_slug as cate_parent_slug')
+        ->leftJoin('brands B', 'B.brand_id', '=', 'P.brand_id')
+        ->leftJoin('categories C','C.category_id', '=', 'P.category_id')
+        ->leftJoin('categories CParent','CParent.category_id', '=', 'C.parent_id')
+        ->where('CParent.category_slug', '=', $cate_parent)
+        ->where( "concat(C.category_slug, '-', P.product_slug)", '=', ($cate_child .'-'. $product_slug))
+        ->execute()->first();
     }
 
     public function getProductByID($id) : array
