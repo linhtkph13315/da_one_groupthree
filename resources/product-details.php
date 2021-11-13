@@ -3,7 +3,8 @@
 <?php section('content') ?>
     <h1>{{ $product_default['product_full_name'] }} - {{ $product_default['product_id'] }}</h1>
     @if($product_default['is_variant'] == 1)
-        <h1>{{ $product_default['product_variant_price'] . ' đ' }}</h1>
+        <h1>{{ $product_default['product_variant_price'] ?? $product_default['product_price'] }} đ</h1>
+        @if($product_default['product_variant_name'])
         <form action="" method="GET" class="abc">
             @foreach($product_variant as $item)
                 <label>
@@ -12,6 +13,7 @@
                 </label>
             @endforeach
         </form>
+        @endif
     @else
         <h1>{{ $product_default['product_price'] . ' đ' }}</h1>
     @endif
